@@ -5,7 +5,7 @@ import saho.backend.model.Employee;
 import saho.backend.repo.EmployeeRepo;
 
 import java.util.List;
-import java.util.UUID;
+
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +21,14 @@ public class EmployeeService {
     public Employee getEmployeeById(String id) {
         return employeeRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Not Found"));
+    }
+
+    public Employee saveEmployee(Employee employee) {
+        return employeeRepo.save(employee);
+    }
+
+    public void deleteEmployee(String id) {
+        employeeRepo.deleteById(id);
     }
 
 

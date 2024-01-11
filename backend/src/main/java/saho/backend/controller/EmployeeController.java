@@ -2,12 +2,10 @@ package saho.backend.controller;
 
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import saho.backend.model.Employee;
-import saho.backend.repo.EmployeeRepo;
+
 import saho.backend.service.EmployeeService;
 
 import java.util.List;
@@ -18,11 +16,22 @@ import java.util.List;
 public class EmployeeController {
 
 
-    private final EmployeeRepo employeeRepo;
+    private final EmployeeService employeeService;
 
     @GetMapping("/employees")
     public List<Employee> getAllEmployees() {
-        return employeeRepo.findAll();
+        return employeeService.getAllEmployees();
     }
+
+    @PostMapping
+    public Employee saveEmployee(@RequestBody Employee employee) {
+        return employeeService.saveEmployee(employee);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteEmployee(@PathVariable String id) {
+        employeeService.deleteEmployee(id);
+    }
+
 
 }
