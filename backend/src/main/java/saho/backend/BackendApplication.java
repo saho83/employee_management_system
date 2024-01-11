@@ -1,4 +1,4 @@
-package saho83.backend;
+package saho.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
