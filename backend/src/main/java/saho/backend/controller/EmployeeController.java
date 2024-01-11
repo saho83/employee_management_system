@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import saho.backend.model.Employee;
+import saho.backend.repo.EmployeeRepo;
 import saho.backend.service.EmployeeService;
 
 import java.util.List;
@@ -17,11 +18,11 @@ import java.util.List;
 public class EmployeeController {
 
 
-    private final EmployeeService employeeService;
+    private final EmployeeRepo employeeRepo;
 
     @GetMapping("/employees")
     public List<Employee> getAllEmployees() {
-        return employeeService.getAllEmployees();
+        return employeeRepo.findAll();
     }
 
 }

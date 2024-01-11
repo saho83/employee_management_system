@@ -5,6 +5,7 @@ import saho.backend.model.Employee;
 import saho.backend.repo.EmployeeRepo;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -16,4 +17,12 @@ public class EmployeeService {
     public List<Employee> getAllEmployees() {
         return employeeRepo.findAll();
     }
+
+    public Employee getEmployeeById(String id) {
+        return employeeRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Not Found"));
+    }
+
+
+
 }
