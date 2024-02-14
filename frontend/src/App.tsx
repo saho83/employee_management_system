@@ -19,6 +19,7 @@ export default function App() {
             <div className="content-container">
             <Routes>
                 <Route path="/" element={<ListEmployeeComponent/>}/>
+                <Route path="/employees" element={<ListEmployeeComponent/>}/>
             </Routes>
             </div>
             <FooterComponent />
