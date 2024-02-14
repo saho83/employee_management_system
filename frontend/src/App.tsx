@@ -1,18 +1,30 @@
-import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import ListEmployeeComponent from "./components/ListEmployeeComponent";
-import ReactDOM from "react-dom";
 
-function App() {
+import './App.css';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import ListEmployeeComponent from './components/ListEmployeeComponent';
+
+
+export default function App() {
+
+
+
+
+
+
     return (
-        <Router>
-            <div>
-                <Route exact path="/" component={ListEmployeeComponent} />
-            </div>
-        </Router>
+        <>
+            <Router>
+                <div>
+                    <Route path="/" Component={ListEmployeeComponent} />
+                </div>
+            </Router>
+
+
+
+
+
+        </>
     );
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
 
-export default App;
