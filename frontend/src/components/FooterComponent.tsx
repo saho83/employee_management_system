@@ -1,13 +1,13 @@
-import React from 'react';
 
-const FooterComponent: React.FC = () => {
+
+export default function FooterComponent()  {
     return (
         <div>
             <footer className="footer">
-                <a> All Rights Reserved 2024 @Sascha Horn</a>
+                <a>Capstone Project neuefische 2024 by Sascha Horn</a>
             </footer>
         </div>
     );
 };
 
-export default FooterComponent;
+
