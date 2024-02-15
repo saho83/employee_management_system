@@ -28,7 +28,7 @@ export default function ListEmployeeComponent() {
     };
 
     const deleteEmployee = (employeeId: string) => {
-        axios.delete(`/api/employees/${employeeId}`)
+        axios.delete(`/api/${employeeId}`)
             .then(() => {
                 getAllEmployees();
             })

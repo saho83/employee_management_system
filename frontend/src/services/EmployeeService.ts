@@ -19,9 +19,12 @@ class EmployeeService {
         return axios.put(`${API_BASE_URL}/${id}`, employee);
     }
 
+    /*
     deleteEmployee(id: string) {
         return axios.delete(`${API_BASE_URL}/${id}`);
     }
+    */
+
 }
 
 export default new EmployeeService();
