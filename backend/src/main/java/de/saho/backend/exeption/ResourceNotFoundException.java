@@ -1,4 +1,4 @@
-package saho.backend.exeption;
+package de.saho.backend.exeption;
 
 
 import org.springframework.http.HttpStatus;
