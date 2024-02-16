@@ -1,4 +1,4 @@
-package de.saho.backend.model;
+package saho.backend.model;
 
 
 import lombok.AllArgsConstructor;

@@ -1,9 +1,9 @@
-package de.saho.backend.service;
+package saho.backend.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import de.saho.backend.exeption.ResourceNotFoundException;
-import de.saho.backend.model.Employee;
-import de.saho.backend.repo.EmployeeRepo;
+import saho.backend.exeption.ResourceNotFoundException;
+import saho.backend.model.Employee;
+import saho.backend.repo.EmployeeRepo;
 
 import java.util.List;
 import java.util.Optional;

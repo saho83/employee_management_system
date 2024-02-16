@@ -1,7 +1,7 @@
-package de.saho.backend.repo;
+package saho.backend.repo;
 
 
-import de.saho.backend.model.Employee;
+import saho.backend.model.Employee;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

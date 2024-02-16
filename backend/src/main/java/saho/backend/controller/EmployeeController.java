@@ -1,14 +1,14 @@
-package de.saho.backend.controller;
+package saho.backend.controller;
 
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import de.saho.backend.exeption.ResourceNotFoundException;
-import de.saho.backend.model.Employee;
+import saho.backend.exeption.ResourceNotFoundException;
+import saho.backend.model.Employee;
 
-import de.saho.backend.service.EmployeeService;
+import saho.backend.service.EmployeeService;
 
 import java.util.List;
 
