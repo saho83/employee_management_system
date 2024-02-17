@@ -7,6 +7,7 @@ import saho.backend.repo.EmployeeRepo;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -31,7 +32,19 @@ class EmployeeServiceTest {
     }
 
     @Test
-    void getEmployeeById() {
+    void getEmployeeById_whenCalled_thenReturnsEmployeeByID() {
+        String id = "1";
+        //GIVEN
+        Employee employee = new Employee("1", "firstName", "lastName", "test@test.de");
+        when(employeeRepo.findById(id)).thenReturn(Optional.of(employee));
+
+        //WHEN
+        Employee actual = employeeService.getEmployeeById(id);
+
+        //THEN
+        Employee expected = new Employee("1", "firstName", "lastName", "test@test.de");
+        verify(employeeRepo).findById(id);
+        assertEquals(expected, actual);
     }
 
     @Test
