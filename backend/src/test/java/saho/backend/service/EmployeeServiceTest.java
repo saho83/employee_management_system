@@ -61,7 +61,17 @@ class EmployeeServiceTest {
     }
 
     @Test
-    void deleteEmployee() {
+    void deleteEmployee_whenEmployeeExists_thenEmployeeDeleted() {
+        String id = "1";
+        //GIVEN
+        Employee employee = new Employee("1", "firstName", "lastName", "test@test.de");
+        when(employeeRepo.findById(id)).thenReturn(Optional.of(employee));
+
+        //WHEN
+        employeeService.deleteEmployee(id);
+
+        //THEN
+        verify(employeeRepo).deleteById(id);
     }
 
     @Test
