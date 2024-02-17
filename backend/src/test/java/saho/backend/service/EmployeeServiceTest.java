@@ -4,8 +4,7 @@ import org.junit.jupiter.api.Test;
 import saho.backend.model.Employee;
 import saho.backend.repo.EmployeeRepo;
 
-import java.util.Collection;
-import java.util.Collections;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -75,6 +74,25 @@ class EmployeeServiceTest {
     }
 
     @Test
-    void updateEmployee() {
+    void updateEmployee_whenEmployeeExists_thenEmployeeUpdated() {
+
+        //GIVEN
+        String id = "1";
+        Employee existingEmployee = new Employee("1", "firstName", "lastName", "test@test.de");
+        Employee employeeDetails = new Employee("1", "newFirstName", "newLastName", "new@test.de");
+
+        when(employeeRepo.findById(id)).thenReturn(Optional.of(existingEmployee));
+
+        //WHEN
+        Employee updatedEmployee = employeeService.updateEmployee(id, employeeDetails);
+
+        //THEN
+        verify(employeeRepo).findById(id);
+
+        assertEquals(employeeDetails.getFirstName(), updatedEmployee.getFirstName());
+        assertEquals(employeeDetails.getLastName(), updatedEmployee.getLastName());
+        assertEquals(employeeDetails.getEmailId(), updatedEmployee.getEmailId());
+
+        verify(employeeRepo).save(existingEmployee);
     }
 }
