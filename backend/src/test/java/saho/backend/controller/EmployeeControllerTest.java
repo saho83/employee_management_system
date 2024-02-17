@@ -76,6 +76,28 @@ class EmployeeControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk());
 
     }
+/*
+    @Test
+    void deleteEmployee_shouldReturnNoContent_WhenEmployeeExists() throws Exception {
+        // Erstellen Sie einen Mitarbeiter, um ihn dann zu löschen
+        Employee employee = new Employee("1", "Test", "Employee", "test@example.com");
+        String employeeAsJSON = objectMapper.writeValueAsString(employee);
+
+        // Fügen Sie den Mitarbeiter hinzu
+        mvc.perform(MockMvcRequestBuilders.post(BASE_URL)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(employeeAsJSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        // Löschen Sie den Mitarbeiter
+        mvc.perform(MockMvcRequestBuilders.delete(BASE_URL + "/1"))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+
+        // Überprüfen Sie, ob der Mitarbeiter nicht mehr gefunden wird
+        mvc.perform(MockMvcRequestBuilders.get(BASE_URL + "/employees/1"))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+*/
 
 
 
