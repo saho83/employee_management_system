@@ -48,7 +48,16 @@ class EmployeeServiceTest {
     }
 
     @Test
-    void saveEmployee() {
+    void saveEmployee_whenEmployeeSaved_thenReturnsSavedEmployee() {
+        //GIVEN
+        Employee employee = new Employee("1", "firstName", "lastName", "test@test.de");
+        when(employeeRepo.save(employee)).thenReturn(employee);
+
+        //WHEN
+        Employee savedEmployee = employeeService.saveEmployee(employee);
+
+        //THEN
+        assertEquals(employee, savedEmployee);
     }
 
     @Test
