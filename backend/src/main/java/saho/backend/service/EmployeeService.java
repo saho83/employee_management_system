@@ -63,7 +63,7 @@ public class EmployeeService {
         employeeRepo.save(existingEmployee);
 
         return employeeRepo.findById(existingEmployee.getId())
-                .orElseThrow() -> new ResourceNotFoundException("Employee not found with id: " + id);
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found with id: " + id));
 
     }
 
