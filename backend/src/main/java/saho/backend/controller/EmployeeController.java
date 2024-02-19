@@ -38,6 +38,7 @@ public class EmployeeController {
 
     @PostMapping
     public Employee saveEmployee(@RequestBody Employee employee) {
+        employee.setId(null);
         return employeeService.saveEmployee(employee);
     }
 
