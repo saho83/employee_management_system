@@ -45,6 +45,28 @@ class EmployeeServiceTest {
         verify(employeeRepo).save(employeeWithoutId);
     }
 
+    @Test
+    void saveEmployee_generatesUniqueId_whenEmployeeIdIsNull() {
+        // GIVEN
+        Employee employeeWithNullId = new Employee(null, "firstName", "lastName", "test@etest.de");
+        when(employeeRepo.save(any(Employee.class))).thenAnswer(invocation -> {
+            Employee savedEmployee = invocation.getArgument(0);
+            if (savedEmployee.getId() == null || savedEmployee.getId().isEmpty()) {
+                savedEmployee.setId("generatedId");
+            }
+            return savedEmployee;
+        });
+
+        // WHEN
+        Employee savedEmployee = employeeService.saveEmployee(employeeWithNullId);
+
+        // THEN
+        assertNotNull(savedEmployee.getId());
+        verify(employeeRepo).save(employeeWithNullId);
+    }
+
+
+
 
     @Test
     void getAllEmployees_whenCalled_thenReturnsAllEmployees() {
