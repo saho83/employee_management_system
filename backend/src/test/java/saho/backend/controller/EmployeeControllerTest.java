@@ -14,7 +14,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import saho.backend.model.Employee;
 
 
-
 @SpringBootTest
 @AutoConfigureMockMvc
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
@@ -27,7 +26,6 @@ class EmployeeControllerTest {
 
     @Autowired
     private ObjectMapper objectMapper;
-
 
 
     @Test
@@ -43,24 +41,23 @@ class EmployeeControllerTest {
         String employeeAsJSON = objectMapper.writeValueAsString(employee);
 
 
-       MvcResult result = mvc.perform(MockMvcRequestBuilders.post(BASE_URL)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(employeeAsJSON))
-                    .andExpect(MockMvcResultMatchers.status().isOk())
+        MvcResult result = mvc.perform(MockMvcRequestBuilders.post(BASE_URL)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(employeeAsJSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 
 
-
-       mvc.perform(MockMvcRequestBuilders.get(BASE_URL + "/employees/1"))
-               .andExpect(MockMvcResultMatchers.status().isOk())
-               .andExpect(MockMvcResultMatchers.content().json("""
-                        {
-                            "id": "1",
-                            "firstName": "firstName",
-                            "lastName": "lastName",
-                            "emailId": "test@test.de"
-                        }
-                """));
+        mvc.perform(MockMvcRequestBuilders.get(BASE_URL + "/employees/1"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json("""
+                                {
+                                    "id": "1",
+                                    "firstName": "firstName",
+                                    "lastName": "lastName",
+                                    "emailId": "test@test.de"
+                                }
+                        """));
 
     }
 
@@ -93,11 +90,10 @@ class EmployeeControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
 
 
-        mvc.perform(MockMvcRequestBuilders.get(BASE_URL + "/" + employee.getId()))
-                .andExpect(MockMvcResultMatchers.status().isNotFound());
+        mvc.perform(MockMvcRequestBuilders.get(BASE_URL + "/employees"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json("[]"));
     }
-
-
 
 
     @Test
@@ -106,24 +102,22 @@ class EmployeeControllerTest {
         String employeeAsJSON = objectMapper.writeValueAsString(employee);
 
 
-        MvcResult result = mvc.perform(MockMvcRequestBuilders.post(BASE_URL)
+        mvc.perform(MockMvcRequestBuilders.post(BASE_URL)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(employeeAsJSON))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
+                .andExpect(MockMvcResultMatchers.status().isOk());
 
-        Employee savedEmployee = objectMapper.readValue(result.getResponse().getContentAsString(), Employee.class);
 
 
         mvc.perform(MockMvcRequestBuilders.get(BASE_URL + "/employees/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json("""
-                        {
-                            "id": "1",
-                            "firstName": "firstName",
-                            "lastName": "lastName",
-                            "emailId": "test@test.de"
-                        }
-                """));
+                                {
+                                    "id": "1",
+                                    "firstName": "firstName",
+                                    "lastName": "lastName",
+                                    "emailId": "test@test.de"
+                                }
+                        """));
     }
 }
