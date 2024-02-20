@@ -1,6 +1,7 @@
 package saho.backend.service;
 
 import org.junit.jupiter.api.Test;
+import saho.backend.exeption.ResourceNotFoundException;
 import saho.backend.model.Employee;
 import saho.backend.repo.EmployeeRepo;
 
@@ -15,6 +16,16 @@ class EmployeeServiceTest {
 
     EmployeeRepo employeeRepo = mock(EmployeeRepo.class);
     EmployeeService employeeService = new EmployeeService(employeeRepo);
+
+    @Test
+    void generateUniqueId_shouldReturnValidUUID() {
+        // WHEN
+        String uniqueId = employeeService.generateUniqueId();
+
+        // THEN
+        assertNotNull(uniqueId);
+        assertTrue(uniqueId.matches("^\\p{XDigit}{8}-\\p{XDigit}{4}-\\p{XDigit}{4}-\\p{XDigit}{4}-\\p{XDigit}{12}$"));
+    }
 
     @Test
     void getAllEmployees_whenCalled_thenReturnsAllEmployees() {
@@ -60,6 +71,43 @@ class EmployeeServiceTest {
     }
 
     @Test
+    void saveEmployee_whenEmployeeIdIsNull_generatesUniqueId() {
+        // GIVEN
+        Employee employee = new Employee(null, "firstName", "lastName", "test@test.de");
+
+
+        when(employeeRepo.save(any(Employee.class))).thenAnswer(invocation -> {
+            Employee savedEmployee = invocation.getArgument(0);
+            savedEmployee.setId("generatedId"); // Setzen Sie eine generierte ID
+            return savedEmployee;
+        });
+
+        // WHEN
+        Employee savedEmployee = employeeService.saveEmployee(employee);
+
+        // THEN
+        assertNotNull(savedEmployee.getId());
+        assertEquals("generatedId", savedEmployee.getId());
+    }
+
+    @Test
+    void saveEmployee_whenEmployeeIdIsNotEmpty_doesNotGenerateNewId() {
+        // GIVEN
+        Employee employee = new Employee("existingId", "firstName", "lastName", "test@test.de");
+
+
+        when(employeeRepo.save(any(Employee.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        // WHEN
+        Employee savedEmployee = employeeService.saveEmployee(employee);
+
+        // THEN
+        assertEquals("existingId", savedEmployee.getId());
+    }
+
+
+
+    @Test
     void deleteEmployee_whenEmployeeExists_thenEmployeeDeleted() {
         String id = "1";
         //GIVEN
@@ -71,6 +119,19 @@ class EmployeeServiceTest {
 
         //THEN
         verify(employeeRepo).deleteById(id);
+    }
+
+    @Test
+    void deleteEmployee_whenEmployeeDoesNotExist_thenThrowException() {
+        String id = "1";
+        // GIVEN
+        when(employeeRepo.findById(id)).thenReturn(Optional.empty());
+
+        // WHEN & THEN
+        assertThrows(ResourceNotFoundException.class, () -> {
+            employeeService.deleteEmployee(id);
+        });
+        verify(employeeRepo, never()).deleteById(id);
     }
 
     @Test

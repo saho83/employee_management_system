@@ -23,7 +23,7 @@ public class EmployeeService {
 
     public Employee getEmployeeById(String id) {
         return employeeRepo.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Employee not found with id: " + id)); //new RuntimeException("Not Found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found with id: " + id));
     }
 
 
@@ -39,7 +39,7 @@ public class EmployeeService {
         return employeeRepo.save(employee);
     }
 
-    private String generateUniqueId() {
+    String generateUniqueId() {
         return UUID.randomUUID().toString();
     }
 
