@@ -87,7 +87,7 @@ class EmployeeServiceTest {
         Employee updatedEmployee = employeeService.updateEmployee(id, employeeDetails);
 
         //THEN
-        verify(employeeRepo).findById(id);
+        verify(employeeRepo, times(2)).findById(id);
 
         assertEquals(employeeDetails.getFirstName(), updatedEmployee.getFirstName());
         assertEquals(employeeDetails.getLastName(), updatedEmployee.getLastName());

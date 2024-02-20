@@ -7,6 +7,7 @@ import saho.backend.repo.EmployeeRepo;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 
 @Service
@@ -22,12 +23,24 @@ public class EmployeeService {
 
     public Employee getEmployeeById(String id) {
         return employeeRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Not Found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found with id: " + id)); //new RuntimeException("Not Found"));
     }
 
 
     public Employee saveEmployee(Employee employee) {
+
+        if (employee.getId() == null || employee.getId().isEmpty()) {
+
+            String id = generateUniqueId();
+
+            employee.setId(id);
+        }
+
         return employeeRepo.save(employee);
+    }
+
+    private String generateUniqueId() {
+        return UUID.randomUUID().toString();
     }
 
     public void deleteEmployee(String id) {
@@ -47,7 +60,11 @@ public class EmployeeService {
         existingEmployee.setLastName(employeeDetails.getLastName());
         existingEmployee.setEmailId(employeeDetails.getEmailId());
 
-        return employeeRepo.save(existingEmployee);
+        employeeRepo.save(existingEmployee);
+
+        return employeeRepo.findById(existingEmployee.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found with id: " + id));
+
     }
 
 
