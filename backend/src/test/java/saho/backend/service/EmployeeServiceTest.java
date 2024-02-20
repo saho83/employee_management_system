@@ -28,6 +28,25 @@ class EmployeeServiceTest {
     }
 
     @Test
+    void saveEmployee_generatesUniqueId_whenEmployeeHasNoId() {
+        // GIVEN
+        Employee employeeWithoutId = new Employee(null, "firstName", "lastName", "test@test.de");
+        when(employeeRepo.save(any(Employee.class))).thenAnswer(invocation -> {
+            Employee savedEmployee = invocation.getArgument(0);
+            savedEmployee.setId("generatedId");
+            return savedEmployee;
+        });
+
+        // WHEN
+        Employee savedEmployee = employeeService.saveEmployee(employeeWithoutId);
+
+        // THEN
+        assertNotNull(savedEmployee.getId());
+        verify(employeeRepo).save(employeeWithoutId);
+    }
+
+
+    @Test
     void getAllEmployees_whenCalled_thenReturnsAllEmployees() {
         //GIVEN
         when(employeeRepo.findAll()).thenReturn(List.of(new Employee("1", "firstName", "lastName", "test@test.de")));
